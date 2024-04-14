@@ -1,0 +1,84 @@
+{% extends "aside" %}
+{% block titulo_menu %}Mantenimiento de Usuarios{% endblock titulo_menu %}
+{% block titulo %}Mantenimiento usuarios{% endblock titulo %}
+{% block static%}
+  {% load static %}
+{% endblock static %}
+
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+      <a href="{% url 'newUsuario' %}" class="btn btn-success"><i class="fa fa-plus-square" aria-hidden="true"></i>
+         Crear nuevo usuario</a>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-striped text-center">
+        <thead>
+        <tr>
+          <th>#</th>          
+          <th>Cedula</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Edad</th>
+          <th>Genero</th>
+          <th>Pais</th>
+          <th>Ciudad o provincia</th>
+          <th>Perfil</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% if usuarios|length > 0  %}
+            {% for usuario in usuarios %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ usuario.cedula }}</td>
+              <td>{{ usuario.nombres }}</td>
+              <td>{{ usuario.apellidos }}</td>
+              <td>{{ usuario.edad }}</td>
+              <td>{{ usuario.genero }}</td>
+              <td>{{ usuario.pais_natal }}</td>
+              <td>{{ usuario.ciuda_natal }}</td>
+              <td>{{ usuario.id_perfil.descripcion }}</td>
+              <td>
+                <form method="post" action="{% url 'eliminar_usuario' usuario.id %}">
+                  {% csrf_token %}
+                  <button type="button" class="btn-sm btn-primary">Editar</button>
+                  <button type="submit" class="btn-sm btn-danger">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock contenido %}
+
+{% block scripts %}
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+  {% if mensaje %}
+    <script>  
+      $(function () {
+        var parametro = "{{ mensaje.mensaje }}";
+        var tipo = "{{ mensaje.tipo }}";
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        
+        $('.swalDefaultSuccess').ready(function() {
+            Toast.fire({
+                icon: tipo,
+                title: parametro
+            });
+        });
+      });  
+    </script>
+  {% endif %}
+{% endblock scripts %}

@@ -1,0 +1,98 @@
+{% extends "aside" %}
+
+{% block titulo_menu %}Mantenimiento de perfiles{% endblock titulo_menu %}
+{% block titulo %}Mantenimiento perfil{% endblock titulo %}
+{% block static%}
+  {% load static %}
+{% endblock static %}
+{% block contenido %}
+
+<div class="card">
+  <div class="card-header">
+    <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear nuevo perfil</button>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Descripcion</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for perfil in perfiles %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ perfil.descripcion }}</td>
+            <td>
+              <form method="post" action="{% url 'eliminarPerfil' perfil.id %}">
+                {% csrf_token %}
+                <button type="button" class="btn-sm btn-primary">Editar</button>
+                <button type="submit" class="btn-sm btn-danger">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear un nuevo perfil</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{% url "nuevo_perfil" %}" method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="inputCedula">Ingrese el nombre del perfil</label>
+              <input type="text" name="inputPerfil" class="form-control">
+            </div>      
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar Registro</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock contenido %}
+
+
+{% block scripts %}
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+  {% if mensaje %}
+    <script>  
+      $(function () {
+        var parametro = "{{ mensaje.mensaje }}";
+        var tipo = "{{ mensaje.tipo }}";
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        
+        $('.swalDefaultSuccess').ready(function() {
+            Toast.fire({
+                icon: tipo,
+                title: parametro
+            });
+        });
+      });  
+    </script>
+  {% endif %}
+{% endblock scripts %}
+

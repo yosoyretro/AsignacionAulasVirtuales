@@ -1,0 +1,90 @@
+{% extends "aside" %}
+{% block titulo_menu %}Nuevo usuario{% endblock titulo_menu %}
+{% block titulo %}Crear un nuevo usuario{% endblock titulo %}
+{% block contenido %}
+<div class="card card-success">
+    <div class="card-header">
+      <h3 class="card-title">Formulario para un nuevo usuario</h3>
+    </div>
+    
+    <form id="ValidateFormNewUser" method="post" action="{% url 'newUsuario' %}">
+      {% csrf_token %}
+      <div class="card-body">
+        <div class="form-group">
+          <label for="inputCedula">Ingrese el numero de cedula</label>
+          <input type="text" name="cedula" class="form-control" id="inputCedula" placeholder="Ingrese la cedula">
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Ingrese sus 2 nombres</label>
+              <input type="text" name="nombres" class="form-control" placeholder="Nombres">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Ingrese su 2 apellidos</label>
+              <input type="text" name="apellidos" class="form-control" placeholder="Apellidos">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Escoja su genero</label>
+          <select required name="genero" class="form-control">
+            <option hidden default>Escoja el genero</option>
+            <option>Masculino</option>
+            <option>Femenino</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="inputEdad">Ingrese su edad</label>
+          <input type="text" name="edad" class="form-control" id="inputEdad" placeholder="Ingrese la edad">
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Escoja el pais</label>
+              <select class="form-control" name="pais">
+                <option>Ecuador</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Escoja la provincia o ciudad</label>
+              <select class="form-control" name="ciudad">
+                <option>Guayaquil</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Escoja el perfil para el usuario</label>
+          <select class="form-control" name="perfil">
+            <option hidden>Escoja el perfil</option>
+            {% for perfil in perfiles  %}  
+              <option value="{{perfil.id}}">{{ perfil.descripcion }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+      </div>
+
+      
+      
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+
+  
+  {% endblock contenido %}
+
+  
