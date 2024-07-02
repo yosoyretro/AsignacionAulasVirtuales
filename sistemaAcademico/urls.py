@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from administrativa.views import dashboard,usuarios,newUsuario,perfiles,aulaVirtual,eliminarUsuario,newPeril,eliminarPeril,cursos,newCurso,deleteCurso
+from administrativa.views import dashboard,usuarios,newUsuario,perfiles,aulaVirtual,eliminarUsuario,newPeril,eliminarPeril,cursos,newCurso,deleteCurso,paralelo,newParalelo,deleteParalelo,materia,newMateria,deleteMateria
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/',dashboard,name="dashboard"),
@@ -33,6 +33,13 @@ urlpatterns = [
     #CURSO
     path('Matenimientos/Cursos/',cursos,name="mantenimientoCursos"),
     path('newCurso/',newCurso,name="nuevoCurso"),
-    path('deleteCurso/<int:curso_id>',deleteCurso,name="deleteCurso")
-    #path('eliminarCurso/')
+    path('deleteCurso/<int:curso_id>',deleteCurso,name="deleteCurso"),
+    #PARALELO
+    path('Matenimientos/Paralelo/',paralelo,name="mantenimientoParalelos"),
+    path('Matenimientos/NewParalelo/',newParalelo,name="NewParalelo"),
+    path('eliminarParalelo/<int:paralelo_id>',deleteParalelo,name="deleteParalelo"),
+    #MATERIAS
+    path('Matenimientos/Materias/',materia,name="mantenimientoParalelos"),
+    path('newMaterias/',newMateria,name="nuevaMateria"),
+    path('eliminarMateria/<int:materia_id>',deleteMateria,name="deleteMateria"),
 ]

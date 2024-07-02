@@ -1,6 +1,6 @@
 {% extends "aside" %}
-{% block titulo_menu %}Mantenimiento de Cursos{% endblock titulo_menu %}
-{% block titulo %}Mantenimiento de Cursos{% endblock titulo %}
+{% block titulo_menu %}Mantenimiento de Paralelo{% endblock titulo_menu %}
+{% block titulo %}Mantenimiento de Paralelo{% endblock titulo %}
 {% block static%}
   {% load static %}
 {% endblock static %}
@@ -8,26 +8,24 @@
 {% block contenido %}
 <div class="card">
     <div class="card-header">
-        <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear nuevo Curso</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear nuevo paralelo</button>
     </div>
     <div class="card-body">
       <table class="table table-bordered table-striped text-center">
         <thead>
         <tr>
           <th>#</th>
-          <th>Numero</th>
-          <th>Curso</th>
+          <th>Paralelo</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-            {% for curso in cursos %}
+            {% for paralelo in paralelos %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ curso.numero }}</td>
-                    <td>{{ curso.curso }}</td>
+                    <td>{{ paralelo.paralelo }}</td>
                     <td>
-                        <form method="post" action="{% url "deleteCurso" curso.id %}">
+                        <form method="post" action="{% url "deleteParalelo" paralelo.id %}">
                             {% csrf_token %}
                             <button type="submit" class="btn-sm btn-danger">Eliminar</button>
                         </form>
@@ -44,24 +42,18 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Crear un nuevo Curso</h4>
+          <h4 class="modal-title">Crear un nuevo paralelo</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{% url "nuevoCurso" %}" method="post">
+        <form action="{% url "NewParalelo" %}" method="post">
           {% csrf_token %}
           <div class="modal-body">
             <div class="card-body">
               <div class="form-group">
-                <label for="inputCedula">Ingrese el numero del Curso</label>
-                <input type="text" name="inputCursoNumber" class="form-control">
-              </div>      
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label>Ingrese el nombre del Curso</label>
-                <input type="text" name="inputCurso" class="form-control">
+                <label>Ingrese el paralelo</label>
+                <input type="text" name="inputParalelo" class="form-control">
               </div>      
             </div>
           </div>

@@ -38,7 +38,7 @@
               <td>{{ usuario.edad }}</td>
               <td>{{ usuario.genero }}</td>
               <td>{{ usuario.pais_natal }}</td>
-              <td>{{ usuario.ciuda_natal }}</td>
+              <td>{{ usuario.ciudad_natal }}</td>
               <td>{{ usuario.id_perfil.descripcion }}</td>
               <td>
                 <form method="post" action="{% url 'eliminar_usuario' usuario.id %}">

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
-from administrativa.models import Perfil,Usuarios,Curso
+from administrativa.models import Perfil,Usuarios,Curso,Paralelo,Materia
 from django.db.models import Q
 # Create your views here.
 #DASHBOARD
@@ -54,8 +54,9 @@ def newUsuario(request):
             edad = data.get('edad'),
             genero = data.get('genero'),
             pais_natal = data.get('pais'),
-            ciuda_natal = data.get('ciudad'),
-            id_perfil = perfil
+            ciudad_natal = data.get('ciudad'),
+            id_perfil = perfil,
+            estado="A"
         )
         if(usuario):
             messages.success(request,"Usuario creado con exito")
@@ -118,21 +119,23 @@ def cursos(request):
         "mensaje":mensaje,
         "cursos":cursos
     })
+
 def newCurso(request):
     try:
         if(request.method == "POST"):
             data_curso = request.POST
-            obj_curso = Curso.objects.create(curso = data_curso.get('inputCurso'))
+            obj_curso = Curso.objects.create(curso = data_curso.get('inputCurso'),numero = data_curso.get('inputCursoNumber'),estado="A")
             obj_curso.save()
             messages.success(request,'Cursos creado con exito')
     except:
         messages.error(request,"A ocurrido un error al crear el curso")   
     return redirect("mantenimientoCursos")
+
 def deleteCurso(request,curso_id):
     try:
         obj_curso = get_object_or_404(Curso,pk=curso_id)
         if(obj_curso):
-            obj_curso.estado = "A"
+            obj_curso.estado = "E"
             obj_curso.save()
             messages.success(request,'Curso eliminado exitosamente')
         else:
@@ -140,6 +143,78 @@ def deleteCurso(request,curso_id):
     except:    
         messages.error(request,'A ocurrido un error al eliminar el curso')
     return redirect("mantenimientoCursos")
+#PARALELO
+def paralelo(request):
+    mensaje = definaMensajes(request)
+    paralelos = Paralelo.objects.filter(estado="A")
+    print("Soy el de paralelos")
+    print(paralelos)
+    for p in paralelos:
+        print(p.paralelo)
+    return render(request,'Mantenimientos/Paralelo',{
+        "mensaje":mensaje,
+        "paralelos":paralelos
+    })
+
+def newParalelo(request):
+    try:
+        if(request.method == "POST"):
+            data_curso = request.POST
+            obj_curso = Paralelo.objects.create(paralelo = data_curso.get('inputParalelo')
+                                                ,estado="A")
+            obj_curso.save()
+            messages.success(request,'Paralelo creado con exito')
+    except:
+        messages.error(request,"A ocurrido un error al crear el curso")   
+    return redirect("mantenimientoParalelos")
+
+def deleteParalelo(request,paralelo_id):
+    try:
+        obj_curso = get_object_or_404(Paralelo,pk=paralelo_id)
+        if(obj_curso):
+            obj_curso.estado = "E"
+            obj_curso.save()
+            messages.success(request,'Paralelo eliminado exitosamente')
+        else:
+            messages.warning(request,f'El Paralelo no existe con el id {paralelo_id}')
+    except:    
+        messages.error(request,'A ocurrido un error al eliminar el paralelo')
+    return redirect("mantenimientoParalelos")
+
+#MATERIA
+def materia(request):
+    mensaje = definaMensajes(request)
+    materia = Materia.objects.filter(estado="A")
+    return render(request,'Mantenimientos/Materias',{
+        "mensaje":mensaje,
+        "materias":materia
+    })
+    
+def newMateria(request):
+    try:
+        if(request.method == "POST"):
+            data_materia = request.POST
+            obj_materia = Materia.objects.create(materia = data_materia.get('inputMateria')
+                                                ,estado="A")
+            obj_materia.save()
+            messages.success(request,'Materia creado con exito')
+    except:
+        messages.error(request,"A ocurrido un error al crear la materia")   
+    return redirect("mantenimientoParalelos")
+
+def deleteMateria(request,materia_id):
+    try:
+        obj_curso = get_object_or_404(Materia,pk=materia_id)
+        if(obj_curso):
+            obj_curso.estado = "E"
+            obj_curso.save()
+            messages.success(request,'Materia eliminada exitosamente')
+        else:
+            messages.warning(request,f'El Paralelo no existe con el id {materia_id}')
+    except:    
+        messages.error(request,'A ocurrido un error al eliminar el paralelo')
+    return redirect("mantenimientoParalelos")
+
 #AULA VIRTUAL
 def aulaVirtual(request):
     return render(request,"Mantenimientos/AulaVirtual",{})

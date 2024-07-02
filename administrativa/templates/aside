@@ -173,6 +173,12 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
+                    <a class="nav-link" href="{% url "mantenimientoParalelos" %}">
+                      <i class="fa fa-table" aria-hidden="true"></i>
+                      <p class="pl-2">Educacion global</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" href="{% url "mantenimientosUsuarios" %}">
                       <i class="fa fa-table" aria-hidden="true"></i>
                       <p class="pl-2">Usuarios</p>
@@ -190,7 +196,30 @@
                       <p class="pl-2">Cursos</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url "mantenimientoParalelos" %}">
+                      <i class="fa fa-table" aria-hidden="true"></i>
+                      <p class="pl-2">Paralelos</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url "mantenimientoParalelos" %}">
+                      <i class="fa fa-table" aria-hidden="true"></i>
+                      <p class="pl-2">Materias</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
 
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-tasks"></i>
+                  <p>
+                    Asignaciones
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a class="nav-link" href="{% url "mantenimientosAulaVirtual" %}">
                       <i class="fa fa-table" aria-hidden="true"></i>
@@ -199,6 +228,7 @@
                   </li>
                 </ul>
               </li>
+
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
